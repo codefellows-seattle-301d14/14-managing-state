@@ -16,6 +16,11 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // 1. Declares an option variable which is set to an array of all the authors found in allArticles.
+ // 2. The variable template is assigned to a handlebars compile method to prepare the option template for use with handlebars.
+ // 3. The entire array is assigned to the options variable and mapping the array so that each index value(author) is pushed into the handlebars template, each as a value.
+ // 4. The category filter is then populated in a similar fashion using the allCategories function call.
+ // 5. The template for each category is then appended top the filter option element.
   articleView.populateFilters = function() {
     var options;
     var template = Handlebars.compile($('#option-template').text());
@@ -35,6 +40,12 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // The handleFilters method ensures that the proper articles are loaded based on the selections made in the author and category filters
+  // A handler is set up to be invoked when a change is registerd in either of the filter menus
+  // the resource variable is set to the type of the filter being altered.
+  // the next line then resets the opposite filter being changed to equal the empty string or default filter setting
+  // page call using resource to enter the first parameter of the required URL being either author or category is then
+  // concatenated with the value of the category or the author using a regex to replace spaces with the '+'
   articleView.handleFilters = function() {
     $('#filters').one('change', 'select', function() {
       var resource = this.id.replace('-filter', '');
@@ -84,6 +95,15 @@
    }; */
 
   // COMMENT: What does this method do?  What is it's execution path?
+  //first we target the articles id. We specifically make this element appear,
+ //then make all its siblings hide. We then target the article (which comes from a handlebars script)
+ //which is nested inside the articles id and remove it.
+ //the forEach function, cycles through the articles array and for each one,
+ //appends a new article into the page.
+ //then we call populateFilters - see description above
+ //then we call handleFilters - see description above
+ //lastly, we save space on the page by using conditional logic to check
+ //how many elements (articles) exist. If there's more than one, then it gets truncated.
   articleView.index = function(articles) {
     $('#articles').show().siblings().hide();
 
