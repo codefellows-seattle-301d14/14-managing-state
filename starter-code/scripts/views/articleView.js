@@ -16,6 +16,12 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // This is invoked directly inside of articleView.index.
+  // It takes in no arguments, but declares two variables, options, and template.
+  // var template is set to the text inside of the handlesbars template script.
+  // var options is set to an array of authors that are mapped in order to avoid repetition.
+  // Options are then appended to the author-filter drop down list.
+  // Article.allCategories is invoked with a callback function that maps the categories to avoid repetition, and then appends the array to the categories-filter drop down list.
   articleView.populateFilters = function() {
     var options;
     var template = Handlebars.compile($('#option-template').text());
@@ -35,6 +41,11 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // this function adds an event listener to the filter drop down lists.
+  // The callback function is invoked on changing or selecting an option.
+  // Inside the handler, the resource variable is saved as the id of the selected drop down list (with '-filter' removed).
+  // The resource variable is concatinated into a string to construct an url path and formated to replace spaces with '+'.
+  // The url path is then passed into the page() function to reload the selected element.
   articleView.handleFilters = function() {
     $('#filters').one('change', 'select', function() {
       var resource = this.id.replace('-filter', '');
@@ -84,6 +95,12 @@
    }; */
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // This function gets called as the second callback function to all the page() invocations in routes.js.
+  // It displays the articles section and hides all the irrelevant sections.
+  // It then removes all the articles inside of the section.
+  // Then it renders a new article for each item found in the argument articles.
+  // After that it invokes the populateFilters and handleFilters functions.
+  // Replaces setTeasers with just the truncation logic, if there is more than one article.
   articleView.index = function(articles) {
     $('#articles').show().siblings().hide();
 
