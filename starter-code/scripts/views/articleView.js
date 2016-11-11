@@ -84,6 +84,7 @@
    }; */
 
   // COMMENT: What does this method do?  What is it's execution path?
+  // Initializes the article section of the index page. Shows the articles and hides all of the siblings. It then builds the author and category filters.
   articleView.index = function(articles) {
     $('#articles').show().siblings().hide();
 
