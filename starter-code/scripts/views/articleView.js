@@ -16,6 +16,11 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  //articleView.populateFilters sets two variables: options, and template, which is a reference to the Handlebars.compile function(which compiles the option template).
+  //Then options is set to a list of unique authors, which is produced using a map function on Article.allAuthors.
+  //The map function returns compiled templates from Handlebars.  then it appends that list of options to the author filter in the DOM.
+  //Then it runs the article.allCategories function, which does the same thing for categories, except it uses a webdb.execute function to return Distinct article categories.
+  //It then appends that to the category filter in the DOM.
   articleView.populateFilters = function() {
     var options;
     var template = Handlebars.compile($('#option-template').text());
@@ -35,6 +40,11 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  //Articlview.handleFilters sets an event listener that fires whenever a filter is changed.
+  //It sets a variable "resource" equal to the name of the filter minus the "-filter".
+  //It then sets all of the other filters to empty.  Finally, it uses the page() function to go to
+  //the url with a pathname that matches the filter type, followed by the selected value.
+  //Before the value is placed in the URL, any spaces are replaced by "+"s.
   articleView.handleFilters = function() {
     $('#filters').one('change', 'select', function() {
       var resource = this.id.replace('-filter', '');
@@ -84,6 +94,12 @@
    }; */
 
   // COMMENT: What does this method do?  What is it's execution path?
+  //articleView.index is called in the articleController.index function if ctx.article.length is not empty.
+  //the function shows the #articles element, and then hides its siblings(i.e. #about).  next it removes any articles in #articles.
+  //then, for each of the articles, it passes it through the render function (inserts it into the template) and then appends it to the page.
+  //next, it invokes the populateFilters and handleFilters functions.
+  //Finally, it hides all by the first two tags of each article, if there is more than one article on the page.
+
   articleView.index = function(articles) {
     $('#articles').show().siblings().hide();
 
